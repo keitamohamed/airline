@@ -179,6 +179,7 @@ public class FlightBooking {
         return bookingID;
     }
 
+    // Working
     private int indexOf(String value) {
         for (int i = 0; i < flights.size(); i++) {
             if (flights.get(i).getFlightName().equalsIgnoreCase(value)) {
