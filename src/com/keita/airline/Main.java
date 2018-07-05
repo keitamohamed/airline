@@ -55,6 +55,9 @@ public class Main {
                 case 3:
                     break;
                 case 4:
+                    System.out.println("Please enter a search value: (Only by full name or booking number): ");
+                    String searchValue = sc.nextLine();
+                    booking.isBookCancle(searchValue);
                     break;
                 default:
                     System.out.println("Invalid selection. Please select a valid choice from the list");
@@ -69,6 +72,7 @@ public class Main {
                 "2. Search for available flight\n" +
                 "3. Check booking detail\n" +
                 "4. Cancel booking\n" +
+                "5. Print category\n" +
                 "99. End program\n" +
                 "Pick a choice: ");
         return (sc.nextInt());
