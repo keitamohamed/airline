@@ -36,6 +36,10 @@ public class Flight {
                 "flight number is " + flightNum + ", your seat number is ";
     }
 
+    public String flightNameAndNum() {
+        return flightName + " " + flightNum;
+    }
+
     public String getFlightName() {
         return flightName;
     }

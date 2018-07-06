@@ -22,10 +22,12 @@ public class Passenger {
 
     @Override
     public String toString() {
-        return "Customer name: " + fullName + " email " + email + " " +
-                "age " + age;
+        return "Customer name: " + fullName + " email " + email + " " + "age " + age;
     }
 
+    public String listPassanger() {
+        return "Name: " + fullName + ", booking #: " + bookingNum + ", seat #: " + seatNum;
+    }
 
     public String seatDetail() {
         return ", seat " + seatNum;

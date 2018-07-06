@@ -8,19 +8,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class FlightBooking {
+public class Booking {
 
-    private List<List<String>> seat;
     private List<Flight> flights;
-    Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
 
-    private Flight flight;
     private AirLineSeat airlineSeat;
 
-    public FlightBooking() {
+    public Booking() {
         this.flights = new ArrayList<>();
         this.flights = new ArrayList<>();
-        this.flight = new Flight();
         this.airlineSeat = new AirLineSeat();
     }
 
@@ -95,6 +92,20 @@ public class FlightBooking {
             flightName = getFlightName(flights, searchValue);
         }
         updateCancelSeat(flightName, getPassSeatNum(flights, searchValue));
+    }
+
+    public void printPassengeByFlight() {
+        for (Flight flight : flights) {
+            System.out.println(("List Of Passenger On " + flight.flightNameAndNum()).toUpperCase()
+            + "\n===========================================");
+            for (int i = 0; i < flight.getPassengers().size(); i++) {
+                System.out.println(flight.getPassengers().get(i).listPassanger());
+            }
+            if (flight.getPassengers().size() == 0) {
+                System.out.println("There are no passenger on airline " + flight.getFlightNum());
+            }
+            System.out.println();
+        }
     }
 
     private String createSeat(String name) {
@@ -184,10 +195,10 @@ public class FlightBooking {
     }
 
     private Flight availableFlight(List<Flight> flights, String flightName) {
-        for (int i = 0; i < flights.size(); i++) {
-            if (flights.get(i).getFlightName().toUpperCase().contains(flightName.toUpperCase())) {
-                System.out.println(flights.get(i).toString() + " is available");
-                return flights.get(i);
+        for (Flight flight : flights) {
+            if (flight.getFlightName().toUpperCase().contains(flightName.toUpperCase())) {
+                System.out.println(flight.toString() + " is available");
+                return flight;
             }
         }
         return null;
