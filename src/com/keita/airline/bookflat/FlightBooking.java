@@ -85,26 +85,16 @@ public class FlightBooking {
                 "your booking number is " + passenger.getBookingNum() + "\n");
     }
 
-    public void isBookCancle(String searchValue) {
+    public void isBookCancel(String searchValue) {
 
         String flightName = getFlightName(flights, searchValue);
-        String passFlightName = getPassFlightName(flights, searchValue);
-        while ((flightName == null) && passFlightName == null ) {
+        while ((flightName == null)) {
             System.out.println("Invalid value. Please enter a search value");
             searchValue = sc.nextLine();
 
             flightName = getFlightName(flights, searchValue);
-            passFlightName = getPassFlightName(flights, searchValue);
         }
-
-        if (flightName != null) {
-            System.out.println("Going in to the cancel method");
-            cancleBooking(flightName, searchValue);
-        }
-        else {
-            System.out.println("Going in to the cancel method");
-            cancleBooking(passFlightName, searchValue);
-        }
+        updateCancelSeat(flightName, getPassSeatNum(flights, searchValue));
     }
 
     private String createSeat(String name) {
@@ -173,20 +163,19 @@ public class FlightBooking {
         return (flights.get(indexOf(flightName)).flightDetail());
     }
 
-    private void cancleBooking(String flightName, String seatNum) {
+    private void updateCancelSeat(String flightName, String seatNum) {
 
         List<List<String>> seats = flights.get((indexOf(flightName))).getSeats();
-
-        for (List<String> seat : seats) {
-            for (int i = 0; i < seat.size(); i++) {
-                System.out.println("Going found 1 " + seatNum + " == " + seat.get(i).charAt(0));
-                if ((seat.get(i).charAt(0) == seatNum.charAt(0))) {
-                    System.out.println("Going found");
-                    int conCustSeat = Character.getNumericValue(seatNum.charAt(1));
-                    int conRowSeat = Character.getNumericValue(seat.get(i).charAt(1));
-                    if ((conRowSeat + 1) == conCustSeat) {
-                        seat.set((conRowSeat + 1), seatNum);
-                        System.out.println("Booking have been successfully cancel!");
+        for (int i = 0; i < seats.size(); i++) {
+            for (int j = 0; j < seats.get(i).size(); j++) {
+                if ((seats.get(i).get(j).charAt(0) == seatNum.charAt(0))) {
+                    if (j != 0) {
+                        int rowNum = Integer.parseInt(seats.get(i).get(j).substring(1));
+                        int customerSeatNum = Integer.parseInt(seatNum.substring(1));
+                        if ((customerSeatNum - rowNum) == 1) {
+                            seats.get(i).set((rowNum + 1), seatNum);
+                            System.out.println("Your booking have been successfully cancel!");
+                        }
                     }
                 }
 
@@ -215,30 +204,29 @@ public class FlightBooking {
         return (1000 + random.nextInt( 90000));
     }
 
-    private String getPassFlightName(List<Flight> flights, String name) {
+    private String getPassSeatNum(List<Flight> flights, String searchValue) {
         for (Flight flight : flights) {
             for (Passenger p : flight.getPassengers()) {
-                if (p.getFullName().equalsIgnoreCase(name)) {
-                    return flight.getFlightName();
+                if ((p.getFullName().equalsIgnoreCase(searchValue)) ||
+                        p.getBookingNum().equalsIgnoreCase(searchValue)) {
+                    return p.getSeatNum();
                 }
             }
         }
         return null;
     }
 
-    private String getFlightName(List<Flight> flights, String name) {
+    private String getFlightName(List<Flight> flights, String searchValue) {
+
         for (Flight flight : flights) {
-            if (flight.getFlightName().equalsIgnoreCase(name)) {
-                return flight.getFlightName();
+            for (Passenger p : flight.getPassengers()) {
+                if ((p.getFullName().equalsIgnoreCase(searchValue)) ||
+                        p.getBookingNum().equalsIgnoreCase(searchValue)) {
+                    return flight.getFlightName();
+                }
             }
         }
         return null;
-    }
-
-    private String getSeatNum(String searchValue) {
-
-        return null;
-
     }
 
     private int indexOf(String value) {

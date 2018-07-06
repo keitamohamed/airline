@@ -55,9 +55,9 @@ public class Main {
                 case 3:
                     break;
                 case 4:
-                    System.out.println("Please enter a search value: (Only by full name or booking number): ");
+                    System.out.println("Enter search value: (By: name or booking number): ");
                     String searchValue = sc.nextLine();
-                    booking.isBookCancle(searchValue);
+                    booking.isBookCancel(searchValue);
                     break;
                 default:
                     System.out.println("Invalid selection. Please select a valid choice from the list");
