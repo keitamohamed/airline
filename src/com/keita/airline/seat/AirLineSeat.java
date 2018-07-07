@@ -26,23 +26,14 @@ public class AirLineSeat {
     }
 
     public List<List<String>> is64SeatCreated() {
-        if (createSmallSeat().size() == 0){
-            return createSmallSeat();
-        }
         return createSmallSeat();
     }
 
     public List<List<String>> is80SeatCreated() {
-        if (createMediumSeat().size() == 0){
-            return createMediumSeat();
-        }
         return createMediumSeat();
     }
 
     public List<List<String>> is120SeatCreated() {
-        if (createLargeSeat().size() == 0){
-            return createLargeSeat();
-        }
         return createLargeSeat();
     }
 

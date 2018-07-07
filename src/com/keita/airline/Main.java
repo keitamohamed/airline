@@ -33,26 +33,29 @@ public class Main {
                     choice = 99;
                     break;
                 case 1:
-                    choice = booking.printFlat();
-                    String seat = booking.createSeat(choice);
-                    booking.isSeatUpdated(choice, seat);
+                    booking.addNewFlight();
                     break;
                 case 2:
+                    choice = booking.printFlat();
+                    String seat = booking.getFlightAndPrint(choice);
+                    booking.isSeatUpdated(choice, seat);
+                    break;
+                case 3:
                     System.out.println("What flight are you searching for?: ");
                     String flightName = sc.nextLine();
                     booking.isFlightAvailable(flightName);
                     break;
-                case 3:
+                case 4:
                     System.out.println(("All information might not be available base\non search key/value\n" +
                             "===========================================").toUpperCase());
                     booking.checkBookingDetail();
                     break;
-                case 4:
+                case 5:
                     System.out.println("Enter search value: (By: name or booking number): ");
                     String searchValue = sc.nextLine();
                     booking.isBookCancel(searchValue);
                     break;
-                case 5:
+                case 6:
                     while (choice != 4) {
                         choice = printCategory();
                         sc.nextLine();
@@ -68,11 +71,12 @@ public class Main {
     private static int menu() {
         System.out.println("Welcome to Airline Booking\n".toUpperCase() +
                 "===========================\n" +
-                "1. Book a flight\n" +
-                "2. Search for available flight\n" +
-                "3. Check booking detail\n" +
-                "4. Cancel booking\n" +
-                "5. Print category\n" +
+                "1. Add new flight\n" +
+                "2. Book a flight\n" +
+                "3. Search for available flight\n" +
+                "4. Check booking detail\n" +
+                "5. Cancel booking\n" +
+                "6. Print category\n" +
                 "99. End program\n" +
                 "Pick a choice: ");
         return (sc.nextInt());

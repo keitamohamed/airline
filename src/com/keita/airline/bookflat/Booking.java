@@ -15,14 +15,36 @@ public class Booking {
 
     public Booking() {
         this.flights = new ArrayList<>();
-        this.flights = new ArrayList<>();
         this.airlineSeat = new AirLineSeat();
     }
 
     public void loadFlat() {
-        flights.add(new Flight("United Airline", airlineSeat.is80SeatCreated()));
-        flights.add(new Flight("Delta", airlineSeat.is64SeatCreated()));
-        flights.add(new Flight("Emirates", airlineSeat.is120SeatCreated()));
+        flights.add(new Flight("United Airline", airLineNum(), airlineSeat.is80SeatCreated()));
+        flights.add(new Flight("Delta", airLineNum(), airlineSeat.is64SeatCreated()));
+        flights.add(new Flight("Emirates", airLineNum(), airlineSeat.is120SeatCreated()));
+    }
+
+    public void addNewFlight() {
+        System.out.println("Enter name of flight: ");
+        String flightName = sc.nextLine();
+
+        while (flightExist(flights, flightName)) {
+            System.out.println("This flight already exist. Enter different name (Yes/No): ");
+            String yeaNo = sc.nextLine();
+
+            while (!yeaNo.equalsIgnoreCase("yes") &&
+                    !yeaNo.equalsIgnoreCase("no")) {
+                System.out.println("Invalid input. Enter different name (Yes/No): ");
+                yeaNo = sc.nextLine();
+            }
+            if (yeaNo.equalsIgnoreCase("no")) {
+                return;
+            }
+
+            System.out.println("Enter name of flight: ");
+            flightName = sc.nextLine().substring(1).toUpperCase();
+        }
+        flights.add(new Flight(flightName, airLineNum(), createFlightSeat()));
     }
 
     public int printFlat() {
@@ -35,7 +57,7 @@ public class Booking {
         return (sc.nextInt());
     }
 
-    public String createSeat(int flat) {
+    public String getFlightAndPrint(int flat) {
 
         List<List<String>> seats = flights.get(flat - 1).getSeats();
         sc.nextLine();
@@ -64,7 +86,7 @@ public class Booking {
             System.out.println("Book a seat on this flight (Yes/No): ");
             String book = sc.nextLine();
             if (book.equalsIgnoreCase("Yes")) {
-                String seat = createSeat(flightName);
+                String seat = getFlightAndPrint(flightName);
                 isSeatUpdated(flightName, seat);
             }
         }
@@ -170,10 +192,33 @@ public class Booking {
         System.out.println();
     }
 
-    private String createSeat(String name) {
+    private List<List<String>> createFlightSeat() {
+        System.out.println(("Select number of passengers flight can hold\n" +
+                "========================================").toUpperCase() + "\n" +
+                "1. 64 passengers\n" +
+                "2. 80 passenger\n" +
+                "3. 120 passenger\n" +
+                "Select one choice: ");
+        int choice = sc.nextInt();
+
+        while (choice < 1 || choice > 3) {
+            System.out.println("Invalid input. Select one choice");
+            choice = sc.nextInt();
+        }
+        if (choice == 1) {
+            return airlineSeat.is64SeatCreated();
+        }
+        else if (choice == 2) {
+            return airlineSeat.is80SeatCreated();
+        }
+        else {
+            return airlineSeat.is120SeatCreated();
+        }
+    }
+
+    private String getFlightAndPrint(String name) {
 
         List<List<String>> seats = flights.get(indexOf(name)).getSeats();
-
         System.out.println("PICK AN AVAILABLE SEAT FROM THE LIST\n" +
                 "===================================");
         for (int i = 0; i < seats.size(); i++) {
@@ -287,6 +332,11 @@ public class Booking {
         return (1000 + random.nextInt( 90000));
     }
 
+    private int airLineNum() {
+        Random random = new Random();
+        return (1000 + random.nextInt(9000));
+    }
+
     private String getPassSeatNum(List<Flight> flights, String searchValue) {
         for (Flight flight : flights) {
             for (Passenger p : flight.getPassengers()) {
@@ -332,6 +382,15 @@ public class Booking {
             }
         }
         return null;
+    }
+
+    private boolean flightExist(List<Flight> flights, String flightName) {
+        for (Flight flight: flights) {
+            if (flight.getFlightName().equalsIgnoreCase(flightName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private int indexOf(String value) {

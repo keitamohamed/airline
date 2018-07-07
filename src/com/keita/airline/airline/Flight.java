@@ -12,18 +12,14 @@ public class Flight {
     private List<List<String>> seats;
     private List<Passenger> passengers;
 
-    private int airLineNum = 5262;
-
     public Flight() {
-
     }
 
-    public Flight(String n, List<List<String>> seat) {
+    public Flight(String n, int airNum, List<List<String>> seat) {
         this.flightName = n;
-        this.flightNum = "Air" + airLineNum;
+        this.flightNum = "Air" + airNum;
         this.seats = seat;
         this.passengers = new ArrayList<>();
-        airLineNum++;
     }
 
     @Override
@@ -50,11 +46,6 @@ public class Flight {
 
     public List<List<String>> getSeats() {
         return seats;
-    }
-
-
-    public int getAirLineNum() {
-        return airLineNum;
     }
 
     public List<Passenger> getPassengers() {
