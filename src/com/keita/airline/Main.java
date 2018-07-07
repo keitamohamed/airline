@@ -82,9 +82,10 @@ public class Main {
                 break;
             case 2:
                 choice = booking.printFlat();
-                booking.printSeat(choice);
+                booking.printFlightSeat(choice);
                 break;
             case 3:
+                booking.printFlightSeat();
                 break;
             default:
         }
@@ -99,6 +100,5 @@ public class Main {
                 "4. Return to main menu\n" +
                 "Chose from the list: ");
         return (sc.nextInt());
-
     }
 }
