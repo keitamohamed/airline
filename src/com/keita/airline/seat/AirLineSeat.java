@@ -85,15 +85,4 @@ public class AirLineSeat {
         return largeSeat;
     }
 
-    public List<List<String>> getSmallSeats() {
-        return smallSeats;
-    }
-
-    public List<List<String>> getMediumSeat() {
-        return mediumSeat;
-    }
-
-    public List<List<String>> getLargeSeat() {
-        return largeSeat;
-    }
 }

@@ -33,6 +33,7 @@ public class Booking {
     }
 
     public String createSeat(int flat) {
+
         List<List<String>> seats = flights.get(flat - 1).getSeats();
         sc.nextLine();
 
@@ -94,7 +95,7 @@ public class Booking {
         updateCancelSeat(flightName, getPassSeatNum(flights, searchValue));
     }
 
-    public void printPassengeByFlight() {
+    public void printPassengerByFlight() {
         for (Flight flight : flights) {
             System.out.println(("List Of Passenger On " + flight.flightNameAndNum()).toUpperCase()
             + "\n===========================================");
@@ -106,6 +107,22 @@ public class Booking {
             }
             System.out.println();
         }
+    }
+
+    public void printSeat(int position) {
+        Flight flight = flights.get(position - 1);
+        System.out.println(("List of seats number on " + flight.getFlightName() + " " +
+                "" + flight.getFlightNum()).toUpperCase() + "\n" +
+                "========================================");
+        for (List<String> seat : flight.getSeats()) {
+            for (int i = 0; i < seat.size(); i++) {
+                if (i != 0) {
+                    System.out.print(seat.get(i) + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     private String createSeat(String name) {
@@ -124,7 +141,7 @@ public class Booking {
         }
         System.out.println("\nEnter a seat number (X mean the seat is taken): ");
         String seat = sc.nextLine();
-        while (seat.equalsIgnoreCase("X") || isSeatAvailable(flights, (indexOf(name) + 1), seat)) {
+        while (seat.equalsIgnoreCase("X") || !isSeatAvailable(flights, (indexOf(name) + 1), seat)) {
             System.out.println("Invalid. Enter a seat number (Ex: K3): ");
             seat = sc.nextLine();
         }

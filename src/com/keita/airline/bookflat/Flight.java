@@ -32,8 +32,8 @@ public class Flight {
     }
 
     public String flightDetail() {
-        return "thank for choosing " + flightName + " as your flight service.\nThe " +
-                "flight number is " + flightNum + ", your seat number is ";
+        return "thank for choosing " + flightName + " as your flight service.\n" +
+                "Flight number is " + flightNum + ", your seat number is ";
     }
 
     public String flightNameAndNum() {

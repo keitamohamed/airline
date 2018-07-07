@@ -2,11 +2,7 @@ package com.keita.airline;
 
 import com.keita.airline.bookflat.Booking;
 import com.keita.airline.seat.AirLineSeat;
-import com.keita.airline.bookflat.Flight;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -82,9 +78,11 @@ public class Main {
     private static void switchPrintOption(Booking booking, int choice) {
         switch (choice) {
             case 1:
-                booking.printPassengeByFlight();
+                booking.printPassengerByFlight();
                 break;
             case 2:
+                choice = booking.printFlat();
+                booking.printSeat(choice);
                 break;
             case 3:
                 break;
