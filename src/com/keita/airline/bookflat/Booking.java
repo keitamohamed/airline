@@ -19,6 +19,11 @@ public class Booking {
         this.airlineSeat = new AirLineSeat();
     }
 
+    public void loadFlat() {
+        flights.add(new Flight("United Airline", airlineSeat.is80SeatCreated()));
+        flights.add(new Flight("Delta", airlineSeat.is64SeatCreated()));
+        flights.add(new Flight("Emirates", airlineSeat.is120SeatCreated()));
+    }
 
     public int printFlat() {
         System.out.println("CHOSE A FLIGHT FROM THE LIST\n" +
@@ -79,6 +84,28 @@ public class Booking {
         flights.get(flat - 1).getPassengers().add(passenger);
         System.out.println("Hi " + name + ", " + flatDetail + seat.toUpperCase() + ",\nand " +
                 "your booking number is " + passenger.getBookingNum() + "\n");
+    }
+
+    public void checkBookingDetail() {
+        System.out.println("Enter search value (By: passenger name or booking number): ");
+        String searchValue = sc.nextLine();
+         while (!isBookingDetailFound(flights, searchValue)) {
+             System.out.println("There are no booking detail by the name or booking number of " + searchValue + ".\n" +
+                     "Would you like to try another search value (Yes/No): ");
+             String tryAgain = sc.nextLine();
+             while (!tryAgain.equalsIgnoreCase("Yes") &&
+                     !tryAgain.equalsIgnoreCase("No")) {
+                 System.out.println("Invalid input. Would you like to try another search value (Yes/No): ");
+                 tryAgain = sc.nextLine();
+             }
+             if (tryAgain.equalsIgnoreCase("Yes")) {
+                 System.out.println("Enter search value (By: passenger name or booking number): ");
+                 searchValue = sc.nextLine();
+             }
+             else {
+                 return;
+             }
+         }
     }
 
     public void isBookCancel(String searchValue) {
@@ -209,6 +236,22 @@ public class Booking {
         return (flights.get(indexOf(flightName)).flightDetail());
     }
 
+    private boolean isBookingDetailFound(List<Flight> flights, String searchValue) {
+        for (Flight flight : flights) {
+            List<Passenger> passengers = flight.getPassengers();
+            for (Passenger p : passengers) {
+                if (p.getFullName().equalsIgnoreCase(searchValue)) {
+                    System.out.println(p.getFullName() + " book a flight on " + flight.getFlightName() + "\n");
+                    return true;
+                }else if (p.getBookingNum().equalsIgnoreCase(searchValue)) {
+                    System.out.println(p.bookingDetail((flight.getFlightName() + " " + flight.getFlightNum())));
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void updateCancelSeat(String flightName, String seatNum) {
 
         List<List<String>> seats = flights.get((indexOf(flightName))).getSeats();
@@ -237,12 +280,6 @@ public class Booking {
             }
         }
         return null;
-    }
-
-    public void loadFlat() {
-        flights.add(new Flight("United Airline", airlineSeat.is80SeatCreated()));
-        flights.add(new Flight("Delta", airlineSeat.is64SeatCreated()));
-        flights.add(new Flight("Emirates", airlineSeat.is120SeatCreated()));
     }
 
     private int bookingID() {

@@ -29,6 +29,10 @@ public class Passenger {
         return "Name: " + fullName + ", booking #: " + bookingNum + ", seat #: " + seatNum;
     }
 
+    public String bookingDetail(String flightName) {
+        return fullName + " book a flight on " + flightName + ", seat number " + seatNum + "\n";
+    }
+
     public String seatDetail() {
         return ", seat " + seatNum;
     }

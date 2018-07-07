@@ -43,6 +43,9 @@ public class Main {
                     booking.isFlightAvailable(flightName);
                     break;
                 case 3:
+                    System.out.println(("All information might not be available base\non search key/value\n" +
+                            "===========================================").toUpperCase());
+                    booking.checkBookingDetail();
                     break;
                 case 4:
                     System.out.println("Enter search value: (By: name or booking number): ");
