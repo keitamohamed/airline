@@ -1,12 +1,10 @@
 package com.keita.airline.bookflat;
 
+import com.keita.airline.airline.Flight;
 import com.keita.airline.flightpassanger.Passenger;
 import com.keita.airline.seat.AirLineSeat;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Booking {
 
@@ -92,7 +90,10 @@ public class Booking {
 
             flightName = getFlightName(flights, searchValue);
         }
-        updateCancelSeat(flightName, getPassSeatNum(flights, searchValue));
+        if (getFlight(flights, searchValue) != null) {
+            updateCancelSeat(flightName, getPassSeatNum(flights, searchValue));
+            deletePassenger(Objects.requireNonNull(getFlight(flights, searchValue)), searchValue);
+        }
     }
 
     public void printPassengerByFlight() {
@@ -109,18 +110,35 @@ public class Booking {
         }
     }
 
-    public void printSeat(int position) {
+    public void printFlightSeat(int position) {
         Flight flight = flights.get(position - 1);
         System.out.println(("List of seats number on " + flight.getFlightName() + " " +
                 "" + flight.getFlightNum()).toUpperCase() + "\n" +
                 "========================================");
         for (List<String> seat : flight.getSeats()) {
             for (int i = 0; i < seat.size(); i++) {
-                if (i != 0) {
+                if (0 < i) {
                     System.out.print(seat.get(i) + " ");
                 }
             }
             System.out.println();
+        }
+        System.out.println();
+    }
+
+    public void printFlightSeat() {
+        for (Flight flight : flights) {
+            System.out.println(("\nList of seats number on " + flight.getFlightName() + " " +
+                    "" + flight.getFlightNum()).toUpperCase() + "\n" +
+                    "========================================");
+            for (List<String> s : flight.getSeats()) {
+                for (int i = 0; i < s.size(); i++) {
+                    if (i > 0) {
+                        System.out.print(s.get(i) + " ");
+                    }
+                }
+                System.out.println();
+            }
         }
         System.out.println();
     }
@@ -167,10 +185,10 @@ public class Booking {
     private String updateSeat(int flat, String seat) {
 
         List<List<String>> seats = flights.get(flat - 1).getSeats();
-        for (int i = 0; i < seats.size(); i++) {
-            for (int j = 0; j < seats.get(i).size(); j++) {
-                if (seats.get(i).get(j).equalsIgnoreCase(seat)) {
-                    seats.get(i).set(j, "X");
+        for (List<String> s : seats) {
+            for (int j = 0; j < s.size(); j++) {
+                if (s.get(j).equalsIgnoreCase(seat)) {
+                    s.set(j, "X");
                     break;
                 }
             }
@@ -238,6 +256,28 @@ public class Booking {
                 if ((p.getFullName().equalsIgnoreCase(searchValue)) ||
                         p.getBookingNum().equalsIgnoreCase(searchValue)) {
                     return p.getSeatNum();
+                }
+            }
+        }
+        return null;
+    }
+
+    private void deletePassenger(Flight flight, String searchValue) {
+        for (Passenger p : flight.getPassengers()) {
+            if ((p.getFullName().equalsIgnoreCase(searchValue)) ||
+                    p.getBookingNum().equalsIgnoreCase(searchValue)) {
+                flight.getPassengers().remove(p);
+            }
+        }
+    }
+
+    private Flight getFlight(List<Flight> flights, String searchValue) {
+        for (Flight flight : flights) {
+            List<Passenger> passenger = flight.getPassengers();
+            for (int i = 0; i < passenger.size(); i++) {
+                if (passenger.get(i).getFullName().equalsIgnoreCase(searchValue) ||
+                        passenger.get(i).getBookingNum().equalsIgnoreCase(searchValue)) {
+                    return flight;
                 }
             }
         }

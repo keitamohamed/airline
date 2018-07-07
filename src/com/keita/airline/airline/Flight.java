@@ -1,4 +1,4 @@
-package com.keita.airline.bookflat;
+package com.keita.airline.airline;
 
 import com.keita.airline.flightpassanger.Passenger;
 
