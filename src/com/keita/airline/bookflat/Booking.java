@@ -27,6 +27,7 @@ public class Booking {
     public void addNewFlight() {
         System.out.println("Enter name of flight: ");
         String flightName = sc.nextLine();
+        flightName = Character.toUpperCase(flightName.charAt(0)) + flightName.substring(1);
 
         while (flightExist(flights, flightName)) {
             System.out.println("This flight already exist. Enter different name (Yes/No): ");
@@ -42,7 +43,8 @@ public class Booking {
             }
 
             System.out.println("Enter name of flight: ");
-            flightName = sc.nextLine().substring(1).toUpperCase();
+            flightName = sc.nextLine();
+            flightName = Character.toUpperCase(flightName.charAt(0)) + flightName.substring(1);
         }
         flights.add(new Flight(flightName, airLineNum(), createFlightSeat()));
     }
