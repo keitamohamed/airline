@@ -64,16 +64,21 @@ public class Booking {
         List<List<String>> seats = flights.get(flat - 1).getSeats();
         sc.nextLine();
 
-        System.out.println(("LIST OF AVAILABLE SEAT ON " +
-                "" + flights.get(flat -1).getFlightName()).toUpperCase() + "\n" +
-                "===================================");
+        System.out.println(("MK: LIST OF AVAILABLE SEATS ON " +
+                "" + flights.get(flat -1).getFlightName()).toUpperCase() + "\n");
         for (List<String> seat : seats) {
             for (int j = 0; j < seat.size(); j++) {
                 if (j != 0) {
-                    System.out.print(seat.get(j) + " ");
+                    System.out.print(seat.get(j) + " || ");
                 }
             }
-            System.out.println();
+            if (flat == 1)
+                System.out.println("\n============================================================");
+            else if (flat == 2)
+                System.out.println("\n===============================================");
+            else
+                System.out.println("\n======================================================================" +
+                        "=========================");
         }
         System.out.println("Enter a seat number (X mean the seat is taken): ");
         String seat = sc.nextLine();
