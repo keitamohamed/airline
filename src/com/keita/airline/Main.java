@@ -46,7 +46,7 @@ public class Main {
                     booking.isFlightAvailable(flightName);
                     break;
                 case 4:
-                    System.out.println(("All information might not be available base\non search key/value\n" +
+                    System.out.println(("All information might not be available base\non search key or value\n" +
                             "===========================================").toUpperCase());
                     booking.checkBookingDetail();
                     break;
@@ -69,8 +69,8 @@ public class Main {
     }
 
     private static int menu() {
-        System.out.println("Welcome to Airline Booking\n".toUpperCase() +
-                "===========================\n" +
+        System.out.println("\nMK: Welcome to Airline Booking\n".toUpperCase() +
+                "==============================\n" +
                 "1. Add new flight\n" +
                 "2. Book a flight\n" +
                 "3. Search for available flight\n" +

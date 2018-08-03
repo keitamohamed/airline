@@ -170,15 +170,20 @@ public class Booking {
     public void printFlightSeat(int position) {
         Flight flight = flights.get(position - 1);
         System.out.println(("List of seats number on " + flight.getFlightName() + " " +
-                "" + flight.getFlightNum()).toUpperCase() + "\n" +
-                "========================================");
+                "" + flight.getFlightNum()).toUpperCase() + "\n");
         for (List<String> seat : flight.getSeats()) {
             for (int i = 0; i < seat.size(); i++) {
                 if (0 < i) {
-                    System.out.print(seat.get(i) + " ");
+                    System.out.print(seat.get(i) + " || ");
                 }
             }
-            System.out.println();
+            if (position == 1)
+                System.out.println("\n============================================================");
+            else if (position == 2)
+                System.out.println("\n===============================================");
+            else
+                System.out.println("\n=====================================================================" +
+                        "=========================");
         }
         System.out.println();
     }
